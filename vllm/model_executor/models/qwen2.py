@@ -417,7 +417,7 @@ class Qwen2ForCausalLM(nn.Module, SupportsLoRA):
             if self.config.tie_word_embeddings and "lm_head.weight" in name:
                 continue
             for (param_name, weight_name, shard_id) in stacked_params_mapping:
-                if weight_name not in name:
+                if "." + weight_name not in name:
                     continue
                 name = name.replace(weight_name, param_name)
                 # Skip loading extra bias for GPTQ models.
